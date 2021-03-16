@@ -31,7 +31,8 @@ class GUI:
 
     def initialize_gui(self):
         self.root.title("Socket Chat")
-        self.root.resizable(300, 300)
+        self.root.geometry("1500x200")
+        self.root.resizable(0, 0)
         self.display_name_section()
 
     def listen_for_incoming_messages_in_a_thread(self):
@@ -61,36 +62,43 @@ class GUI:
 
     def display_name_section(self):
         frame = Frame()
-        Label(frame, text="Enter your name:", font=("Helvetica", 16)).pack(
+        Label(frame, text="Enter name directory:", font=("Helvetica", 16)).pack(
             side="left", padx=10
         )
         self.name_widget = Entry(frame, width=50, borderwidth=2)
         self.name_widget.pack(side="left", anchor="e")
         self.join_button = Button(
-            frame, text="Join", width=10, command=self.create_file
+            frame, text="Create", width=10, command=self.create_file
         ).pack(side="left")
         frame.pack(side="top", anchor="nw")
-        Label(frame, text="Enter your name:", font=("Helvetica", 16)).pack(
+        Label(frame, text="Enter name directory:", font=("Helvetica", 16)).pack(
             side="left", padx=10
         )
         self.name_widget2 = Entry(frame, width=50, borderwidth=2)
         self.name_widget2.pack(side="left", anchor="e")
-        self.join_button = Button(
+        self.join_button3 = Button(
             frame, text="Delete", width=10, command=self.delete_file
+        ).pack(side="left")
+
+        self.join_button = Button(
+            frame, text="Delete", width=10, command=self.start_app
         ).pack(side="left")
 
     def create_file(self):
         if len(self.name_widget.get()) == 0:
-            messagebox.showerror("Enter your name", "Enter your name to send a message")
+            messagebox.showerror("Enter your name", "Enter name directory")
             return
 
         self.client_socket.send(("create," + self.name_widget.get()).encode("utf-8"))
 
     def delete_file(self):
         if len(self.name_widget2.get()) == 0:
-            messagebox.showerror("Enter the name", "Enter the name")
+            messagebox.showerror("Enter the name", "Enter name directory")
             return
         self.client_socket.send(("delete," + self.name_widget2.get()).encode("utf-8"))
+
+    def start_app(self):
+        self.client_socket.send(("startapp").encode("utf-8"))
 
     def on_close_window(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):

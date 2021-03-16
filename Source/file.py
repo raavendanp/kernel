@@ -34,11 +34,11 @@ class File:
             message = buffer.decode("utf-8")
             # self.chat_transcript_area.insert('end', message + '\n')
             # self.chat_transcript_area.yview(END)
-            inpu = Lexer.Lexer.checkFile(message)
+            inpu = Lexer.Lexer.checkGrammar(message)
 
             if inpu[0] == "create":
                 self.create_file(inpu[1])
-            else:
+            if inpu[0] == "delete":
                 self.delete_file(inpu[1])
         so.close()
 

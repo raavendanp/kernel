@@ -5,6 +5,7 @@ import socket
 import gui as Gui
 import file as File
 import lexer as Lexer
+import app as App
 
 
 class Kernel:
@@ -62,3 +63,5 @@ class Kernel:
         h4.start()
         h5 = threading.Thread(target=File.File)
         h5.start()
+        h6 = threading.Thread(target=App.App)
+        h6.start()
